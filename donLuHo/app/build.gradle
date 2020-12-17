@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.donLuHo"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "2.0.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    android {
+
+        signingConfigs {
+            release {
+                //签名文件路径
+                storeFile file { "../bysign.jks" }
+                //签名密码
+                storePassword "byok2020"
+                //别名
+                keyAlias "aiplan"
+                //别名密码
+                keyPassword "byok2020"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                if (variant.buildType.name == "debug") {
+                    output.outputFileName = "dlh_d_${android.defaultConfig.versionName}.apk"
+                } else if (variant.buildType.name == "release") {
+                    output.outputFileName = "dlh_${android.defaultConfig.versionName}.apk"
+                }
+            }
+        }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation project(':katafoundation')
+    implementation project(':imageloader')
+    implementation project(':appupdate')
+
+    //形状textview
+    implementation 'com.ruffian.library:RTextView:1.0.11'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.orhanobut:logger:2.2.0'
+    // implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+    //permissions
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    }
+}

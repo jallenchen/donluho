@@ -1,0 +1,79 @@
+//app的全局配置在这里
+ext {
+    ////////////////生产环境////////////////////////
+    applicationId = 'com.bnm'
+    versionCode = 1
+    versionName = '1.1.1'
+    ////////////////生产环境////////////////////////
+
+    ////////////////测试环境////////////////////////
+    test_applicationId = 'com.bnm.test'
+    ////////////////测试环境////////////////////////
+
+    ////////////////开发环境////////////////////////
+    dev_applicationId = 'com.bnm.dev'
+    ////////////////开发环境////////////////////////
+
+    //修改compileSdkVersion并不会影响我们的我们生成的app在手机先的行为。最理想的情况就是把compileSdkVersion设置到最高。
+    globalCompileSdkVersion = 29
+    //targetSdkVersion的设置主要是当系统版本高于设置的target的时候。然后targetSdkVersion最好和compileSdkVersion一样。
+    globalTargetSdkVersion = 29
+    //这个就是程序运行的最低的要求的Sdk版本号，在低于这个版本号的手机设备上无法安装。
+    globalMinSdkVersion = 19
+    supportLibraryVersion = "1.0.0"
+
+
+    /*=================================module中用到的引用============================================*/
+    globalDependencies = [
+            appcompat                    : "androidx.appcompat:appcompat:${supportLibraryVersion}",
+            design                       : "com.google.android.material:material:${supportLibraryVersion}",
+            recyclerview                 : "androidx.recyclerview:recyclerview:${supportLibraryVersion}",
+            annotation                 : "androidx.annotation:annotation:${supportLibraryVersion}",
+
+            //网络
+            retrofit                     : 'com.squareup.retrofit2:retrofit:2.5.0',
+            converter_gson               : 'com.squareup.retrofit2:converter-gson:2.5.0',
+            adapter_rxjava2              : 'com.squareup.retrofit2:adapter-rxjava2:2.5.0',
+            logging_interceptor          : 'com.squareup.okhttp3:logging-interceptor:3.4.1',
+            logger                       : 'com.orhanobut:logger:2.2.0',
+            //权限
+            rxpermissions                : 'com.github.tbruyelle:rxpermissions:0.10.2',
+            BaseRecyclerViewAdapterHelper: 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45-androidx',
+            smartRefresh                 : 'com.scwang.smart:refresh-layout-kernel:2.0.0',
+            smartRefreshHeaderMaterial   : 'com.scwang.smart:refresh-header-material:2.0.0',
+            smartRefreshFooterMaterial   : 'com.scwang.smart:refresh-header-classics:2.0.0',
+            //rxjava
+            rxandroid                    : 'io.reactivex.rxjava2:rxandroid:2.0.2',
+            rxjava                       : 'io.reactivex.rxjava2:rxjava:2.x.x',
+            rxlifecycle                  : 'com.trello.rxlifecycle3:rxlifecycle:3.0.0',
+            rxlifecycle_components       : 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0',
+            //app更新
+            update_app                   : 'com.azhon:appupdateX:2.9.0',
+            //指示器
+            MagicIndicator               : 'com.github.hackware1993:MagicIndicator:1.5.0',
+            AppbarLayoutBehavior         : 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.2',
+            //屏幕适配
+            autosize                     : 'me.jessyan:autosize:1.1.2',
+            //增加头部框架
+            flexbox                      : 'com.google.android:flexbox:1.1.0',
+            tagflexboxlayout             : 'com.bigkoo:tagflexboxlayout:1.0.1',
+            convenientbanner             : 'com.bigkoo:convenientbanner:2.1.5',
+            imagezoom                    : 'it.sephiroth.android.library.imagezoom:library:1.0.4',
+            photoView                    : 'com.github.chrisbanes:PhotoView:2.3.0',
+            picker                       : 'com.contrarywind:Android-PickerView:4.1.8',
+            xtablayout                   : 'com.androidkun:XTabLayout:1.1.4',
+            vtablayout                   : 'q.rorbin:VerticalTabLayout:1.2.5',
+            circleImageView              : 'de.hdodenhof:circleimageview:2.2.0',
+            updateAPK                    :'com.github.maning0303:MNUpdateAPK:V2.0.3',
+            flexibledivider              :'com.yqritc:recyclerview-flexibledivider:1.4.0',//recycleview分割线
+            RTextView                    :'com.ruffian.library:RTextView:1.0.11',    //形状textview
+            materialdatetimepicker       :'com.wdullaer:materialdatetimepicker:4.2.3',    //时间选择
+            timeCountDown                :'com.github.iwgang:countdownview:2.1.6',    //倒计时
+            spinner                      :'com.jaredrummler:material-spinner:1.3.1',    //倒计时
+            OkhttpCacheInterceptor                      :'com.xiaolei:OkhttpCacheInterceptor:1.0.0',    //倒计时
+            LiteOrm                      :'com.github.ashLikun:LiteOrm:1.0.0',    //数据库
+            Umeng                      :'com.umeng.umsdk:analytics:8.1.6',    //友盟
+            UmengCommon                      : 'com.umeng.umsdk:common:2.2.5',    //友盟
+            AppbarLayoutBehavior         : 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.2',
+    ]
+}
