@@ -24,4 +24,14 @@
         <item name="android:windowExitAnimation">@anim/slide_out_splash</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@color/trans</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+    </style>
 </resources>

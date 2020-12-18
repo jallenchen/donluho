@@ -2,4 +2,5 @@
 <resources>
     <color name="colorPrimary">#fa3e4b</color>
     <color name="white">#ffffff</color>
+    <color name="trans">#00000000</color>
 </resources>
