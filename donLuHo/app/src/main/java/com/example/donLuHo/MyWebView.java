@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.example.donLuHo.http.JSInterface;
 import com.example.donLuHo.util.L;
-import com.example.donLuHo.util.LogUtil;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -171,7 +170,7 @@ public class MyWebView {
 
 
     private void selectImage() {
-        String[] selectPicTypeStr = {"拍照","录像", "图库"};
+        String[] selectPicTypeStr = mContext.getResources().getStringArray(R.array.picks);
         new AlertDialog.Builder(mContext)
                 .setOnCancelListener(new ReOnCancelListener())
                 .setItems(selectPicTypeStr,
@@ -188,6 +187,9 @@ public class MyWebView {
                                     case 2:
                                         chosePicture();
                                         break;
+                                    case 3:
+                                        cancelPick();
+                                        break;
                                 }
                             }
                         }).show();
@@ -198,15 +200,19 @@ public class MyWebView {
     private class ReOnCancelListener implements DialogInterface.OnCancelListener {
         @Override
         public void onCancel(DialogInterface dialogInterface) {
-            if (mUploadMessage != null) {
-                mUploadMessage.onReceiveValue(null);
-                mUploadMessage = null;
-            }
+            cancelPick();
+        }
+    }
 
-            if (mUploadCallbackAboveL != null) {
-                mUploadCallbackAboveL.onReceiveValue(null);
-                mUploadCallbackAboveL = null;
-            }
+    private void cancelPick(){
+        if (mUploadMessage != null) {
+            mUploadMessage.onReceiveValue(null);
+            mUploadMessage = null;
+        }
+
+        if (mUploadCallbackAboveL != null) {
+            mUploadCallbackAboveL.onReceiveValue(null);
+            mUploadCallbackAboveL = null;
         }
     }
 
@@ -250,13 +256,12 @@ public class MyWebView {
         } else {
             cameraUri = Uri.fromFile(vFile);
         }
-        LogUtil.print("MyWebView","cameraUri:"+cameraUri);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
         mContext.startActivityForResult(intent, REQUEST_CAMERA);
     }
 
     private void chosePicture() {
-        Intent mediaChooser = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent mediaChooser = new Intent(Intent.ACTION_PICK);
         //comma-separated MIME types
         mediaChooser.setType("video/*, image/*");
         mContext.startActivityForResult(mediaChooser, REQUEST_CHOOSE);
@@ -294,7 +299,6 @@ public class MyWebView {
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        LogUtil.print("MyWebView","Intent:"+data);
         if (mUploadCallbackAboveL != null) {
             onActivityResultAboveL(requestCode, resultCode, data);
         }
@@ -309,7 +313,6 @@ public class MyWebView {
         if (requestCode == REQUEST_CHOOSE && resultCode == Activity.RESULT_OK) {
             uri = afterChosePic(data);
         }
-        LogUtil.print("MyWebView","uri:"+uri);
 
         mUploadMessage.onReceiveValue(uri);
         mUploadMessage = null;
