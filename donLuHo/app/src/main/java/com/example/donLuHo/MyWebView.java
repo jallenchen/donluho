@@ -25,6 +25,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.donLuHo.http.JSInterface;
+import com.example.donLuHo.util.LogUtil;
+import com.google.gson.Gson;
 
 import java.io.File;
 
@@ -208,7 +210,7 @@ public class MyWebView {
     private void openVideoCamera() {
         ///sdcard/app
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        String videoPaths = Environment.getExternalStorageDirectory().getPath()+"/donluho/" + (System.currentTimeMillis() + ".mp4");
+        String videoPaths = Const.ROOT_PATH + (System.currentTimeMillis() + ".mp4");
         // 必须确保文件夹路径存在，否则拍照后无法完成回调
         File vFile = new File(videoPaths);
         if (!vFile.exists()) {
@@ -230,7 +232,7 @@ public class MyWebView {
 
     private void openImageCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        String imagePaths = Environment.getExternalStorageDirectory().getPath()+"/donluho/" + (System.currentTimeMillis() + ".jpg");
+        String imagePaths = Const.ROOT_PATH + (System.currentTimeMillis() + ".jpg");
         // 必须确保文件夹路径存在，否则拍照后无法完成回调
         File vFile = new File(imagePaths);
         if (!vFile.exists()) {
@@ -285,6 +287,8 @@ public class MyWebView {
         }
         mUploadCallbackAboveL.onReceiveValue(results);
         mUploadCallbackAboveL = null;
+        LogUtil.print("MyWebView","data:"+new Gson().toJson(data));
+        LogUtil.print("MyWebView","cameraUri:"+new Gson().toJson(cameraUri));
         return;
     }
 

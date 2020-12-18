@@ -10,14 +10,13 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 
 public class MainApp extends Application {
     private static MainApp mInstance;
-    private static final String API_HOST = "http://b.nmcwsh.com/";
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
         LoggerSettings();
-        HttpServiceGenerator.init(this, API_HOST);
+        HttpServiceGenerator.init(this, Const.API_HOST);
 
     }
 
