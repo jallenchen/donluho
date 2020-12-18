@@ -70,9 +70,13 @@ public class SplashView{
 
     public void countDown(){
         if(DELAY <= 0){
-            handler.removeCallbacksAndMessages(null);
-            view.setVisibility(View.GONE);
-            this.activity.splashFinish();
+            if(this.activity.loadFinish){
+                handler.removeCallbacksAndMessages(null);
+                view.setVisibility(View.GONE);
+                this.activity.splashFinish();
+            }else {
+                handler.sendMessageDelayed(handler.obtainMessage(), 1000);
+            }
         } else{
             DELAY = DELAY - 1000;
             tvCounter.setText(MainApp.getInstance().getString(R.string.countdown_s, DELAY/1000));

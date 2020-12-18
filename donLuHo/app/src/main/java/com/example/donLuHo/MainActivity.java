@@ -25,8 +25,9 @@ import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 public class MainActivity extends BaseDetailActivity<MainPresenter> implements MainViewable {
-   private MyWebView myWebView;
+    public MyWebView myWebView;
    private SplashView splashView;
+    public boolean loadFinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

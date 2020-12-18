@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class L {
     public static boolean sDeBug = true;
-    private final static String TAG = "SUIS--->";
+    private final static String TAG = "LUHO--->";
     private static long mStartTime = 0;
 
     public static void d(String s) {

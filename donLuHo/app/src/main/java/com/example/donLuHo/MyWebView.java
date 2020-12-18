@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.donLuHo.http.JSInterface;
+import com.example.donLuHo.util.L;
 import com.example.donLuHo.util.LogUtil;
 import com.google.gson.Gson;
 
@@ -142,7 +143,9 @@ public class MyWebView {
                 //通过图片的延迟载入，让网页能更快地显示
                 if(progress == 100){
                     webSettings.setBlockNetworkImage(false);
+                    mContext.loadFinish = true;
                 }
+                L.e("progress:"+progress);
             }
 
             @Override
@@ -208,7 +211,6 @@ public class MyWebView {
     }
 
     private void openVideoCamera() {
-        ///sdcard/app
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         String videoPaths = Const.ROOT_PATH + (System.currentTimeMillis() + ".mp4");
         // 必须确保文件夹路径存在，否则拍照后无法完成回调
@@ -248,6 +250,7 @@ public class MyWebView {
         } else {
             cameraUri = Uri.fromFile(vFile);
         }
+        LogUtil.print("MyWebView","cameraUri:"+cameraUri);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
         mContext.startActivityForResult(intent, REQUEST_CAMERA);
     }
@@ -287,12 +290,11 @@ public class MyWebView {
         }
         mUploadCallbackAboveL.onReceiveValue(results);
         mUploadCallbackAboveL = null;
-        LogUtil.print("MyWebView","data:"+new Gson().toJson(data));
-        LogUtil.print("MyWebView","cameraUri:"+new Gson().toJson(cameraUri));
         return;
     }
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        LogUtil.print("MyWebView","Intent:"+data);
         if (mUploadCallbackAboveL != null) {
             onActivityResultAboveL(requestCode, resultCode, data);
         }
@@ -307,6 +309,8 @@ public class MyWebView {
         if (requestCode == REQUEST_CHOOSE && resultCode == Activity.RESULT_OK) {
             uri = afterChosePic(data);
         }
+        LogUtil.print("MyWebView","uri:"+uri);
+
         mUploadMessage.onReceiveValue(uri);
         mUploadMessage = null;
     }
@@ -314,10 +318,10 @@ public class MyWebView {
     //退出时的时间
     private long mExitTime;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            if (webView.canGoBack()) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            if(webView.canGoBack()){
                 webView.goBack();
-            }else {
+            }else if(event.getRepeatCount() == 0) {
                 if ((System.currentTimeMillis() - mExitTime) > 2000) {
                     String txt =  mContext.getString(R.string.alert_exit_app, mContext.getResources().getString(R.string.app_name));
                     Toast.makeText(mContext, txt, Toast.LENGTH_SHORT).show();
@@ -330,4 +334,5 @@ public class MyWebView {
         }
         return false;
     }
+
 }
